@@ -14,9 +14,9 @@ jobs:
         run: |
           node -v
           npm -v
-      - name: python command
-        run: |
-          import platforms
+   #   - name: python command
+   #     run: |
+  #        import platforms
  #         print{platform.processor{}}
  #        shell: python
   run-windows-commands:
