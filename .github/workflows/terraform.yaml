@@ -1,38 +1,40 @@
 # Workflow to automate Terraform tasks
 name: "Terraform"
 
-# Trigger the workflow on a push event
+# Trigger the workflow on a push event to the main branch
 on:
   push:
     branches:
-      - main  # You can specify the branch you want to trigger on
+      - main
 
-      # Define the job for Terraform
+# Define environment variables for AWS access
 env:
- AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
- AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+
+# Define the job for Terraform
 jobs:
   terraform:
     runs-on: ubuntu-latest
 
     # Define the steps to be executed in the job
     steps:
-      - name: checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: setup terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-         terraform: 1.1.9
+          terraform: 1.1.9
 
-      - name: initialise
+      - name: Initialize Terraform
         run: terraform init
 
-      - name: validate
+      - name: Validate Terraform configuration
         run: terraform validate
 
-      - name: format
+      - name: Check Terraform code formatting
         run: terraform fmt -check
 
-      - name: plan
+      - name: Generate Terraform execution plan
         run: terraform plan
