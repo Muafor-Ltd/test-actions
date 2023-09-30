@@ -1,0 +1,35 @@
+# Workflow to automate Terraform tasks
+name: "Terraform"
+
+# Trigger the workflow on a push event
+on:
+  push:
+    branches:
+      - main  # You can specify the branch you want to trigger on
+
+# Define the job for Terraform
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    # Define the steps to be executed in the job
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform: 1.1.9
+
+      - name: initialise
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+
+      - name: format
+        run: terraform fmt -check
+
+      - name: plan
+        run: terraform plan
