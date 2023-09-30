@@ -7,7 +7,10 @@ on:
     branches:
       - main  # You can specify the branch you want to trigger on
 
-# Define the job for Terraform
+      # Define the job for Terraform
+env:
+ AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+ AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -20,7 +23,7 @@ jobs:
       - name: setup terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform: 1.1.9
+         terraform: 1.1.9
 
       - name: initialise
         run: terraform init
